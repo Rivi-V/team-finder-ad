@@ -1,4 +1,6 @@
 from pathlib import Path
+import sys
+
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,6 +12,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
+TASK_VERSION = config("TASK_VERSION", default="1")
 
 
 # Application definition
@@ -21,6 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
+    "projects",
 ]
 
 MIDDLEWARE = [
@@ -38,7 +43,7 @@ ROOT_URLCONF = "team_finder.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / f"templates_var{config('TASK_VERSION', default='1')}"],
+        "DIRS": [BASE_DIR / f"templates_var{TASK_VERSION}"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -67,6 +72,12 @@ DATABASES = {
     }
 }
 
+if "test" in sys.argv:
+    DATABASES["default"] = {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -90,6 +101,10 @@ if not DEBUG:
         ]
     )
 
+
+AUTH_USER_MODEL = "users.User"
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -111,6 +126,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+LOGIN_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "/projects/list/"
+LOGOUT_REDIRECT_URL = "/projects/list/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
