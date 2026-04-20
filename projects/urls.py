@@ -2,11 +2,8 @@ from django.urls import path
 
 from projects import views
 
-<<<<<<< ours
+
 app_name = 'projects'
-=======
-app_name = "projects"
->>>>>>> theirs
 
 urlpatterns = [
     path('list', views.project_list_view, name='list'),

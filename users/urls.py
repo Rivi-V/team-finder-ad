@@ -2,11 +2,8 @@ from django.urls import path
 
 from users import views
 
-<<<<<<< ours
+
 app_name = 'users'
-=======
-app_name = "users"
->>>>>>> theirs
 
 urlpatterns = [
     path('register/', views.register_view, name='register'),
