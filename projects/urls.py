@@ -1,0 +1,24 @@
+app_name = 'projects'
+
+from django.urls import path
+
+from projects import views
+
+urlpatterns = [
+    path('list', views.project_list_view, name='list'),
+    path('list/', views.project_list_view, name='list-slash'),
+    path('favorites', views.favorite_projects_view, name='favorites-no-slash'),
+    path('favorites/', views.favorite_projects_view, name='favorites'),
+    path('create-project', views.create_project_view, name='create'),
+    path('create-project/', views.create_project_view, name='create-slash'),
+    path('skills/', views.skills_autocomplete_view, name='skills-autocomplete'),
+    path('<int:project_id>/', views.project_detail_view, name='detail'),
+    path('<int:project_id>', views.project_detail_view, name='detail-no-slash'),
+    path('<int:project_id>/edit', views.edit_project_view, name='edit'),
+    path('<int:project_id>/edit/', views.edit_project_view, name='edit-slash'),
+    path('<int:project_id>/complete/', views.complete_project_view, name='complete'),
+    path('<int:project_id>/toggle-participate/', views.toggle_participate_view, name='toggle-participate'),
+    path('<int:project_id>/toggle-favorite/', views.toggle_favorite_view, name='toggle-favorite'),
+    path('<int:project_id>/skills/add/', views.add_skill_to_project_view, name='skill-add'),
+    path('<int:project_id>/skills/<int:skill_id>/remove/', views.remove_skill_from_project_view, name='skill-remove'),
+]
