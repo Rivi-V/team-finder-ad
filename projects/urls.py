@@ -1,8 +1,8 @@
-app_name = 'projects'
-
 from django.urls import path
 
 from projects import views
+
+app_name = 'projects'
 
 urlpatterns = [
     path('list', views.project_list_view, name='list'),
