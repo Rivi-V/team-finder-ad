@@ -12,7 +12,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY")
 DEBUG = config("DJANGO_DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
-TASK_VERSION = config("TASK_VERSION", default="1")
+TASK_VERSION = "1"
 
 
 # Application definition
